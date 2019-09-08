@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>萌神サンプル</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<style type="text/css">
+		body {
+			font-family: "メイリオ",Meiryo,"ヒラギノ角ゴ Pro","Hiragino Kaku Gothic",sans-serif;
+		}
+
+		.text-center {text-align: center;}
+		input {
+			background: #333333;
+			padding: 10px;
+			min-width: 200px;
+			font-size: 16pt;
+			 border-radius: 10px;        /* CSS3草案 */  
+    -webkit-border-radius: 10px;    /* Safari,Google Chrome用 */  
+    -moz-border-radius: 10px;   /* Firefox用 */  
+    color: #ffffff;
+
+		}
+		div.omikujibase {
+			background-image: url("docplate.jpg");
+			background-repeat: no-repeat;
+			background-position: top left;
+
+			line-height: 1.2;
+			margin: 0px; padding: 0px;
+		}
+		div.omikujibase p.kRes {
+			margin: 0px;
+			font-size: 40pt;
+			line-height: 1.2;
+		}
+		div.omikujibase p.kCom {
+			margin: 0px;
+			font-size: 16pt;
+			line-height: 1.2;
+		}
+		p.button {
+			text-align: center;
+			margin: 10px 0px;
+
+		}
+
+		/* 外枠：この装飾は無くても構いません */
+		div.playground {
+			margin: 1em 0px;
+			padding: 1em;
+			border: 1px solid gray;
+		}
+
+	</style>
+	<script type="text/javascript">
+
+		// ========================================
+		// 効果音を鳴らす（★今回のメインはこれ★）
+		// ========================================
+		function ring() {
+			document.getElementById("OmikujiSound").play();
+		}
+
+function ring2() {
+			document.getElementById("OmikujiSound2").play();
+		}
+
+
+	</script>
+</head>
+<body>
+
+	<h1>仮アプリ</h1>
+	<p>このサンプルは、<strong>音が鳴ります</strong>ので注意して下さい。<br>音声が出ない場合は、デバイスの音声をONにしてください。</p>
+
+	<!-- =========================== -->
+	<!-- ▼効果音を準備するaudio要素 -->
+	<!-- =========================== -->
+
+    <audio id="OmikujiSound" preload="auto">
+        <source src="28.mp3" type="audio/mp3">
+        <p>※お使いのブラウザは、残念ながらHTML5のaudio要素をサポートしていないようですから、音は鳴りません。</p>
+    </audio>
+    <audio id="OmikujiSound2" preload="auto">
+        <source src="1-2.mp3" type="audio/mp3">
+    </audio>
+
+	<div class="playground">
+		<div class="omikujibase text-center">
+			<p class="kCom" id="KujiCom">j<apan style="color:#FF0000;">iàn</apan></p>
+			<p class="kRes" id="KujiRes">见</p>
+		</div>
+
+		<!-- ―――――――― -->
+		<!-- ▼再生ボタン -->
+		<!-- ―――――――― -->
+
+		<p class="button">
+			<input type="button" onclick="ring(); ShowKuji( 'KujiRes', 'KujiCom' );" value="単語再生" />
+		</p>
+		<p>［動詞］ここに品詞の説明が入ります。</p>
+		<h2>用例</h2>
+		<div class="omikujibase">
+		<p class="kRes" id="KujiRes">周末他来深圳</p>
+		</div>
+		<p>日本語訳：彼は週末に深センにやって来た。</p>
+		<p class="button">
+			<input type="button" onclick="ring2();" value="中文再生" />
+		</p>
+	</div>
+	<p>
+		<a href="http://mengshen-project.com/">http://mengshen-project.com/<br>
+	</p>
+
+</body>
+</html>
