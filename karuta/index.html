@@ -16,7 +16,7 @@
     .hidden {
       visibility: hidden;
     }
-    p#moji {
+    p#hanziID {
       font-size: 60px;
       margin: 10px;
     }
@@ -25,6 +25,10 @@
     }
     img {
       width: 30%;
+    }
+    span#hanzi {
+      font-size: 65px;
+      font-weight: bold;
     }
     .text-center {
       text-align: center;
@@ -80,7 +84,7 @@
     var array = [];
     var now = 0;
 
-    var map = new Map([
+    var hanziMap = new Map([
           ["1", "../images/r01.png"],
           ["5", "../images/r02.png"],
           ["9", "../images/r03.png"],
@@ -128,47 +132,90 @@
           ["36", "../images/g09.png"],
           ["40", "../images/g10.png"],
           ["44", "../images/g11.png"],
-          ["48", "../images/g12.png"]]);
+          ["48", "../images/g12.png"],
+          ['右', null],
+          ['果', null],
+          ['喜', null],
+          ['机', null],
+          ['欠', null],
+          ['差', null],
+          ['徐', null],
+          ['除', null],
+          ['西', null],
+          ['千', null],
+          ['浅', null],
+          ['楚', null],
+          ['端', null],
+          ['断', null],
+          ['刀', null],
+          ['薄', null],
+          ['宝', null],
+          ['埋', null],
+          ['油', null],
+          ['几', null],
+          ['拿', null],
+          ['插', null],
+          ['烟', null],
+          ['习', null],
+          ['优', null],
+          ['卖', null],
+          ['厌', null],
+          ['处', null],
+          ['岛', null],
+          ['报', null],
+          ['检', null],
+          ['续', null],
+          ['记', null],
+          ['许', null],
+          ['过', null],
+          ['锅', null],
+          ['间', null],
+          ['颜', null],
+        ]);
 
     Array.prototype.shuffle = function(){
- 
       var i = this.length;
-   
       while(i){
-   
         var j = Math.floor(Math.random() * i);
         var t = this[--i];
-   
         this[i] = this[j];
         this[j] = t;
       }
-   
       return this;
     }
 
     function init() {
-      // 1..48
-      for (i=0;i<48;i++){
+      for (i=0;i<hanziMap.size;i++){
         array[i] = i;
       }
       console.log(array.shuffle());
-      var img = document.getElementById("image");
-
-      document.getElementById("moji").innerText = (array[0] + 1)
-      document.getElementById("sound").src = "" + "../" + (array[0] + 1) + ".mp3"
-      img.src = "" + map.get(String((array[0] + 1)))
-      img.classList.add('hidden');
-      document.getElementById("OmikujiSound").load()
+      readyHanzi(0);
     }
     function next() {
       now += 1;
-      var img = document.getElementById("image");
-      document.getElementById("moji").innerText = (array[now] + 1)
-      document.getElementById("sound").src = "" + "../" + (array[now] + 1) + ".mp3"
-      document.getElementById("OmikujiSound").load()
-      img.src = "" + map.get(String((array[now] + 1)))
-      img.classList.add('hidden');
+      readyHanzi(now);
       console.log(array[now])
+    }
+    function readyHanzi(pos) {
+      var img = document.getElementById("image");
+      var span = img.nextElementSibling;
+      var audio = document.getElementById("sound");
+      var keyIdx = array[pos] + 1;
+      document.getElementById("hanziID").innerText = keyIdx;
+      if (keyIdx <= 48) {
+        var imagePath = hanziMap.get(String(keyIdx));
+        img.src = "" + imagePath;
+        span.innerText = '';
+        audio.src = "../" + keyIdx + ".mp3"
+      } else {
+        var hanzi = Array.from(hanziMap.keys())[keyIdx - 1];
+        img.src = "";
+        span.innerText = hanzi;
+        audio.src = "../sound/" + keyIdx + ".mp3"
+      }
+      img.classList.add('hidden');
+      span.classList.add('hidden');
+      document.getElementById("OmikujiSound").load()
     }
     function ring() {
       document.getElementById("OmikujiSound").play();
@@ -178,7 +225,10 @@
       console.log(array[now])
     }
     function answer() {
-      document.getElementById("image").classList.remove('hidden');
+      var img = document.getElementById("image");
+      var span = img.nextElementSibling;
+      img.classList.remove('hidden');
+      span.classList.remove('hidden');
     }
   </script>
 </head>
@@ -198,9 +248,10 @@
 
   <div class="playground">
     <div class="omikujibase text-center">
-      <p id="moji"></p>
+      <p id="hanziID"></p>
       <div class="img">
         <img id="image" class="card" src="">
+        <span id="hanzi"></span>
       </div>
     </div>
 
