@@ -45,7 +45,6 @@
 
     }
     div.omikujibase {
-      background-image: url("docplate.jpg");
       background-repeat: no-repeat;
       background-position: top left;
 
@@ -84,93 +83,63 @@
     var array = [];
     var now = 0;
 
+    var exampleSpan = null;
     var hanziMap = new Map([
-          ["1", "../images/r01.png"],
-          ["5", "../images/r02.png"],
-          ["9", "../images/r03.png"],
-          ["13", "../images/r04.png"],
-          ["17", "../images/r05.png"],
-          ["21", "../images/r06.png"],
-          ["25", "../images/r07.png"],
-          ["29", "../images/r08.png"],
-          ["33", "../images/r09.png"],
-          ["37", "../images/r10.png"],
-          ["41", "../images/r11.png"],
-          ["45", "../images/r12.png"],
-          ["2", "../images/b01.png"],
-          ["6", "../images/b02.png"],
-          ["10", "../images/b03.png"],
-          ["14", "../images/b04.png"],
-          ["18", "../images/b05.png"],
-          ["22", "../images/b06.png"],
-          ["26", "../images/b07.png"],
-          ["30", "../images/b08.png"],
-          ["34", "../images/b09.png"],
-          ["38", "../images/b10.png"],
-          ["42", "../images/b11.png"],
-          ["46", "../images/b12.png"],
-          ["3", "../images/y01.png"],
-          ["7", "../images/y02.png"],
-          ["11", "../images/y03.png"],
-          ["15", "../images/y04.png"],
-          ["19", "../images/y05.png"],
-          ["23", "../images/y06.png"],
-          ["27", "../images/y07.png"],
-          ["31", "../images/y08.png"],
-          ["35", "../images/y09.png"],
-          ["39", "../images/y10.png"],
-          ["43", "../images/y11.png"],
-          ["47", "../images/y12.png"],
-          ["4", "../images/g01.png"],
-          ["8", "../images/g02.png"],
-          ["12", "../images/g03.png"],
-          ["16", "../images/g04.png"],
-          ["20", "../images/g05.png"],
-          ["24", "../images/g06.png"],
-          ["28", "../images/g07.png"],
-          ["32", "../images/g08.png"],
-          ["36", "../images/g09.png"],
-          ["40", "../images/g10.png"],
-          ["44", "../images/g11.png"],
-          ["48", "../images/g12.png"],
-          ['右', null],
-          ['果', null],
-          ['喜', null],
-          ['机', null],
-          ['欠', null],
-          ['差', null],
-          ['徐', null],
-          ['除', null],
-          ['西', null],
-          ['千', null],
-          ['浅', null],
-          ['楚', null],
-          ['端', null],
-          ['断', null],
-          ['刀', null],
-          ['薄', null],
-          ['宝', null],
-          ['埋', null],
-          ['油', null],
-          ['几', null],
-          ['拿', null],
-          ['插', null],
-          ['烟', null],
-          ['习', null],
-          ['优', null],
-          ['卖', null],
-          ['厌', null],
-          ['处', null],
-          ['岛', null],
-          ['报', null],
-          ['检', null],
-          ['续', null],
-          ['记', null],
-          ['许', null],
-          ['过', null],
-          ['锅', null],
-          ['间', null],
-          ['颜', null],
+        ['茶', '茶叶'],
+        ['插', '插件'],
+        ['差', '很差'],
+        ['哪', '哪里'],
+        ['那', '那个'],
+        ['拿', '拿来'],
+        ['买', '买东西'],
+        ['埋', '埋头'],
+        ['卖', '卖产品'],
+        ['包', '红包'],
+        ['薄', '薄厚'],
+        ['宝', '支付宝'],
+        ['报', '报文'],
+        ['到', '到达'],
+        ['刀', '螺丝刀'],
+        ['岛', '青岛'],
+        ['级', '等级'],
+        ['机', '机器人'],
+        ['几', '几个'],
+        ['记', '记忆体'],
+        ['系', '系统'],
+        ['西', '西安'],
+        ['习', '学习'],
+        ['喜', '恭喜'],
+        ['有', '有没有'],
+        ['优', '优秀'],
+        ['油', '加油'],
+        ['右', '右转'],
+        ['钱', '还钱'],
+        ['千', '千万'],
+        ['浅', '浅蓝色'],
+        ['欠', '缺欠'],
+        ['眼', '眼睛'],
+        ['烟', '吸烟'],
+        ['颜', '颜值'],
+        ['厌', '讨厌'],
+        ['见', '下次见'],
+        ['间', '空间'],
+        ['检', '检查'],
+        ['出', '出去'],
+        ['除', '删除'],
+        ['楚', '清楚'],
+        ['处', '售票处'],
+        ['国', '国际'],
+        ['锅', '火锅'],
+        ['果', '结果'],
+        ['过', '过去'],
+        ['短', '短信'],
+        ['端', '云端'],
+        ['断', '判断'],
+        ['虚', '虚拟'],
+        ['徐', '徐福'],
+        ['许', '也许'],
+        ['续', '继续'],
+
         ]);
 
     Array.prototype.shuffle = function(){
@@ -185,11 +154,19 @@
     }
 
     function init() {
+      exampleSpan = document.getElementById("example");
       for (i=0;i<hanziMap.size;i++){
         array[i] = i;
       }
       console.log(array.shuffle());
       readyHanzi(0);
+    }
+    function before() {
+      if (now > 0) {
+        now -= 1;
+        readyHanzi(now);
+        console.log(array[now])
+      }
     }
     function next() {
       now += 1;
@@ -202,33 +179,40 @@
       var audio = document.getElementById("sound");
       var keyIdx = array[pos] + 1;
       document.getElementById("hanziID").innerText = keyIdx;
-      if (keyIdx <= 48) {
-        var imagePath = hanziMap.get(String(keyIdx));
-        img.src = "" + imagePath;
-        span.innerText = '';
-        audio.src = "../" + keyIdx + ".mp3"
-      } else {
-        var hanzi = Array.from(hanziMap.keys())[keyIdx - 1];
+      // if (keyIdx <= 48) {
+      //   var imagePath = hanziMap.get(String(keyIdx));
+      //   img.src = "" + imagePath;
+      //   span.innerText = '';
+      //   audio.src = "../sound/" + keyIdx + ".mp3"
+      // } else {
+        var hanziPair = Array.from(hanziMap.entries())[keyIdx - 1];
+        var hanzi = hanziPair[0];
+        var example = hanziPair[1];
         img.src = "";
         span.innerText = hanzi;
+        exampleSpan.innerText = example;
         audio.src = "../sound/" + keyIdx + ".mp3"
-      }
+      // }
       img.classList.add('hidden');
       span.classList.add('hidden');
+      exampleSpan.classList.add('hidden');
       document.getElementById("OmikujiSound").load()
     }
     function ring() {
-      document.getElementById("OmikujiSound").play();
-      setTimeout(function(){
-        document.getElementById("OmikujiSound").load();
-      }, 1000);
-      console.log(array[now])
+      sound = document.getElementById("OmikujiSound");
+      // sound.playbackRate = 0.72;
+      sound.play();
+      // setTimeout(function(){
+      //   document.getElementById("OmikujiSound").load();
+      // }, 3000);
+      // console.log(array[now])
     }
     function answer() {
       var img = document.getElementById("image");
       var span = img.nextElementSibling;
       img.classList.remove('hidden');
       span.classList.remove('hidden');
+      exampleSpan.classList.remove('hidden');
     }
   </script>
 </head>
@@ -252,6 +236,7 @@
       <div class="img">
         <img id="image" class="card" src="">
         <span id="hanzi"></span>
+        <span id="example"></span>
       </div>
     </div>
 
@@ -259,6 +244,9 @@
     <!-- ▼再生ボタン -->
     <!-- ―――――――― -->
 
+    <p class="button">
+      <input type="button" onclick="before();" value="上一个" />
+    </p>
     <p class="button">
       <input type="button" onclick="next();" value="下一个" />
     </p>
