@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>萌神サンプル</title>
+  <title>萌神かるた</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style type="text/css">
@@ -38,11 +38,10 @@
       padding: 10px;
       min-width: 200px;
       font-size: 16pt;
-       border-radius: 10px;        /* CSS3草案 */  
-    -webkit-border-radius: 10px;    /* Safari,Google Chrome用 */  
-    -moz-border-radius: 10px;   /* Firefox用 */  
-    color: #ffffff;
-
+      border-radius: 10px;        /* CSS3草案 */  
+      -webkit-border-radius: 10px;    /* Safari,Google Chrome用 */  
+      -moz-border-radius: 10px;   /* Firefox用 */  
+      color: #ffffff;
     }
     div.omikujibase {
       background-repeat: no-repeat;
@@ -64,7 +63,11 @@
     p.button {
       text-align: center;
       margin: 10px 0px;
-
+      width: 48%;
+      display: inline-block;
+    }
+    p.button input {
+      min-width: 150px;
     }
 
     /* 外枠：この装飾は無くても構いません */
@@ -73,10 +76,8 @@
       padding: 1em;
       border: 1px solid gray;
     }
-
   </style>
   <script type="text/javascript">
-
     // ========================================
     // 効果音を鳴らす（★今回のメインはこれ★）
     // ========================================
@@ -85,62 +86,60 @@
 
     var exampleSpan = null;
     var hanziMap = new Map([
-        ['茶', '茶叶'],
-        ['插', '插件'],
-        ['差', '很差'],
-        ['哪', '哪里'],
-        ['那', '那个'],
-        ['拿', '拿来'],
-        ['买', '买东西'],
-        ['埋', '埋头'],
-        ['卖', '卖产品'],
-        ['包', '红包'],
-        ['薄', '薄厚'],
-        ['宝', '支付宝'],
-        ['报', '报文'],
-        ['到', '到达'],
-        ['刀', '螺丝刀'],
-        ['岛', '青岛'],
-        ['级', '等级'],
-        ['机', '机器人'],
-        ['几', '几个'],
-        ['记', '记忆体'],
-        ['系', '系统'],
-        ['西', '西安'],
-        ['习', '学习'],
-        ['喜', '恭喜'],
-        ['有', '有没有'],
-        ['优', '优秀'],
-        ['油', '加油'],
-        ['右', '右转'],
-        ['钱', '还钱'],
-        ['千', '千万'],
-        ['浅', '浅蓝色'],
-        ['欠', '缺欠'],
-        ['眼', '眼睛'],
-        ['烟', '吸烟'],
-        ['颜', '颜值'],
-        ['厌', '讨厌'],
-        ['见', '下次见'],
-        ['间', '空间'],
-        ['检', '检查'],
-        ['出', '出去'],
-        ['除', '删除'],
-        ['楚', '清楚'],
-        ['处', '售票处'],
-        ['国', '国际'],
-        ['锅', '火锅'],
-        ['果', '结果'],
-        ['过', '过去'],
-        ['短', '短信'],
-        ['端', '云端'],
-        ['断', '判断'],
-        ['虚', '虚拟'],
-        ['徐', '徐福'],
-        ['许', '也许'],
-        ['续', '继续'],
-
-        ]);
+      ['m00002', ['茶', '茶叶']],
+      ['m00003', ['插', '插件']],
+      ['m00004', ['差', '差不多']],
+      ['m00005', ['哪', '哪里']],
+      ['m00006', ['那', '那个']],
+      ['m00007', ['拿', '拿来']],
+      ['m00014', ['买', '买东西']],
+      ['m00015', ['埋', '埋头']],
+      ['m00016', ['卖', '售卖']],
+      ['m00018', ['包', '红包']],
+      ['m00019', ['薄', '薄厚']],
+      ['m00020', ['宝', '支付宝']],
+      ['m00021', ['报', '报道']],
+      ['m00024', ['到', '到达']],
+      ['m00025', ['刀', '螺丝刀']],
+      ['m00026', ['岛', '青岛']],
+      ['m00028', ['级', '等级']],
+      ['m00029', ['机', '机器人']],
+      ['m00030', ['几', '几岁']],
+      ['m00031', ['记', '笔记']],
+      ['m00033', ['系', '系统']],
+      ['m00034', ['西', '西安']],
+      ['m00035', ['习', '学习']],
+      ['m00036', ['喜', '喜欢']],
+      ['m00039', ['有', '有没有']],
+      ['m00040', ['优', '优秀']],
+      ['m00041', ['油', '加油']],
+      ['m00042', ['右', '右转']],
+      ['m00045', ['钱', '换钱']],
+      ['m00046', ['千', '千万']],
+      ['m00047', ['浅', '深浅']],
+      ['m00048', ['欠', '欠妥']],
+      ['m00049', ['眼', '眼睛']],
+      ['m00050', ['烟', '吸烟']],
+      ['m00051', ['颜', '颜值']],
+      ['m00052', ['厌', '讨厌']],
+      ['m00053', ['见', '再见']],
+      ['m00054', ['间', '空间']],
+      ['m00055', ['检', '检查']],
+      ['m00060', ['出', '出去']],
+      ['m00061', ['除', '删除']],
+      ['m00062', ['楚', '清楚']],
+      ['m00063', ['处', '售票处']],
+      ['m00068', ['国', '国际']],
+      ['m00069', ['锅', '火锅']],
+      ['m00070', ['果', '结果']],
+      ['m00071', ['过', '过去']],
+      ['m00076', ['短', '短信']],
+      ['m00077', ['端', '尖端']],
+      ['m00078', ['断', '判断']],
+      ['m00080', ['虚', '虚拟']],
+      ['m00081', ['许', '也许']],
+      ['m00082', ['续', '继续']],
+    ]);
 
     Array.prototype.shuffle = function(){
       var i = this.length;
@@ -178,21 +177,18 @@
       var span = img.nextElementSibling;
       var audio = document.getElementById("sound");
       var keyIdx = array[pos] + 1;
-      document.getElementById("hanziID").innerText = keyIdx;
-      // if (keyIdx <= 48) {
-      //   var imagePath = hanziMap.get(String(keyIdx));
-      //   img.src = "" + imagePath;
-      //   span.innerText = '';
-      //   audio.src = "../sound/" + keyIdx + ".mp3"
-      // } else {
-        var hanziPair = Array.from(hanziMap.entries())[keyIdx - 1];
-        var hanzi = hanziPair[0];
-        var example = hanziPair[1];
-        img.src = "";
-        span.innerText = hanzi;
-        exampleSpan.innerText = example;
-        audio.src = "../sound/" + keyIdx + ".mp3"
-      // }
+
+      var hanziObj = Array.from(hanziMap.entries())[keyIdx - 1];
+      var id = hanziObj[0]
+      var hanziPair = hanziObj[1]
+      var hanzi = hanziPair[0];
+      var example = hanziPair[1];
+      document.getElementById("hanziID").innerText = id;
+
+      img.src = "";
+      span.innerText = hanzi;
+      exampleSpan.innerText = example;
+      audio.src = "../sound/" + id + ".mp3"
       img.classList.add('hidden');
       span.classList.add('hidden');
       exampleSpan.classList.add('hidden');
@@ -244,18 +240,22 @@
     <!-- ▼再生ボタン -->
     <!-- ―――――――― -->
 
-    <p class="button">
-      <input type="button" onclick="before();" value="上一个" />
-    </p>
-    <p class="button">
-      <input type="button" onclick="next();" value="下一个" />
-    </p>
-    <p class="button">
-      <input type="button" onclick="ring();" value="放音" />
-    </p>
-    <p class="button">
-      <input type="button" onclick="answer();" value="正确答案" />
-    </p>
+    <div>
+      <p class="button">
+        <input type="button" onclick="before();" value="上一个" />
+      </p>
+      <p class="button">
+        <input type="button" onclick="next();" value="下一个" />
+      </p>
+    </div>
+    <div>
+      <p class="button">
+        <input type="button" onclick="ring();" value="放音" />
+      </p>
+      <p class="button">
+        <input type="button" onclick="answer();" value="正确答案" />
+      </p>
+    </div>
   </div>
 
 </body>
